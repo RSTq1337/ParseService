@@ -1,0 +1,61 @@
+version: '3.3'
+services:
+  web-provider:
+    container_name: web-provider
+    image: 'rstq1337/web-provider:v4'
+    depends_on:
+      - rabbitmq
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_PORT: 5672
+      TEMP_DEFAULT_QUEUE: carQueue
+      TEMP_EXCHANGE: carExchange
+      TEMP_ROUTING_KEY: car.request
+  parse-service:
+    container_name: parse-service
+    image: 'rstq1337/parse-service:v3'
+    depends_on:
+      - rabbitmq
+      - postgres
+    ports:
+        - "8086:8081"
+    environment:
+        RABBITMQ_HOST: rabbitmq
+        RABBITMQ_USER: guest
+        RABBITMQ_PASSWORD: guest
+        RABBITMQ_PORT: 5672
+        TEMP_DEFAULT_QUEUE: carQueue
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cars
+        SPRING_DATASOURCE_USERNAME: postgres
+        SPRING_DATASOURCE_PASSWORD: postgres
+        SPRING_JPA_HIBERNATE_DDL_AUTO: update
+  rabbitmq:
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    image: 'rabbitmq:3.10-management'
+    restart: always
+#    volumes:
+#      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+#      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+  postgres:
+    image: 'postgres:14.5-bullseye'
+    restart: always
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=cars
+volumes:
+    postgres:
+      driver: local
