@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit
 
 
 @Configuration
-class WebClientConfiguration {
-    private val BASE_URL = "https://ab.onliner.by/sdapi/ab.api/search/vehicles?extended=true&limit=50"
+class WebClientOnlinerConfiguration {
+    private val BASE_URL = "https://ab.onliner.by/sdapi/ab.api/"
     val TIMEOUT = 1000
 
     @Bean
