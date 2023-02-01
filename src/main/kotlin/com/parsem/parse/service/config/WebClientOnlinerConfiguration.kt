@@ -1,4 +1,4 @@
-package com.parsem.parseservice.config
+package com.parsem.parse.service.config
 
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler

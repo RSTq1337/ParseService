@@ -1,7 +1,8 @@
-package com.parsem.parseservice.serivce
+package com.parsem.parse.service.serivce.api.onliner
 
 import org.springframework.web.reactive.function.client.WebClient;
-import com.parsem.parseservice.config.ParseConfiguration
+import com.parsem.parse.service.config.ParseConfiguration
+import com.parsem.parse.service.serivce.OnlinerApiTransferService
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 
@@ -14,17 +15,15 @@ class BasePageInfoServiceImpl(
 
 
     override fun getBasePageInfo() {
-        var result = onlinerApiTransferService.transform(getGeneralInfo().block())
-        var gf = "asdfdsf"
+        onlinerApiTransferService.transform(getGeneralInfo())
+        print("asd")
     }
 
-    private fun getGeneralInfo(): Mono<String> {
+    fun getGeneralInfo(): Mono<String> {
             return webClient
                 .get()
                 .uri("search/vehicles?extended=true&limit=50")
                 .retrieve()
                 .bodyToMono(String::class.java)
     }
-
-
 }

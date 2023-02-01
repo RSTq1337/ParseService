@@ -1,4 +1,4 @@
-package com.parsem.parseservice.config
+package com.parsem.parse.service.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration

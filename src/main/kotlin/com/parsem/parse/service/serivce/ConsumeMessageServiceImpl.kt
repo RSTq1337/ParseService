@@ -1,7 +1,8 @@
-package com.parsem.parseservice.serivce
+package com.parsem.parse.service.serivce
 
 import com.google.gson.Gson
-import com.parsem.parseservice.dto.CarSpecsRequestQueue
+import com.parsem.parse.service.dto.CarSpecsRequestQueue
+import com.parsem.parse.service.serivce.api.onliner.BasePageInfoService
 import org.apache.logging.log4j.LogManager
 import org.springframework.amqp.rabbit.annotation.EnableRabbit
 import org.springframework.amqp.rabbit.annotation.RabbitListener
@@ -16,7 +17,7 @@ class ConsumeMessageServiceImpl(
     @RabbitListener(queues = ["carQueue"])
     override fun consumeMessage(messageBody: String) {
         log.info("Consumed Message: $messageBody")
-        var myObject = Gson().fromJson(messageBody, CarSpecsRequestQueue::class.java)
+        Gson().fromJson(messageBody, CarSpecsRequestQueue::class.java)
         log.info("//////////////////////////////")
     }
     private companion object {

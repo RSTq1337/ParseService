@@ -1,4 +1,4 @@
-package com.parsem.parseservice.dto
+package com.parsem.parse.service.dto
 
 enum class EngineType {
     PETROL,

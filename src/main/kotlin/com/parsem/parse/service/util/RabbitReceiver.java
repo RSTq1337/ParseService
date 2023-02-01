@@ -1,4 +1,4 @@
-package com.parsem.parseservice.util;
+package com.parsem.parse.service.util;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,5 @@ public class RabbitReceiver {
         latch.countDown();
     }
 
-    public CountDownLatch getLatch() {
-        return latch;
-    }
+    public CountDownLatch getLatch = latch;
 }

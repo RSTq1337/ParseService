@@ -1,4 +1,4 @@
-package com.parsem.parseservice.serivce
+package com.parsem.parse.service.serivce.api.onliner
 
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpStatus
@@ -13,14 +13,7 @@ class PhoneNumberServiceImpl(
     private var webClient: WebClient
 ): PhoneNumberService {
 
-    override fun getPhoneNumber(userId: String): String? {
-        var listOfPhone = getPhoneNumberInfo(userId).block();
-        return if (listOfPhone is List<String>) {
-            listOfPhone[0]
-        } else null
-    }
-
-    private fun getPhoneNumberInfo(userId: String): Mono<List<String>> {
+    override fun getPhoneNumberInfo(userId: String): Mono<List<String>> {
         var answer : Mono<List<String>> = Mono.empty();
         try {
              answer = webClient

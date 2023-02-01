@@ -1,4 +1,4 @@
-package com.parsem.parseservice.config
+package com.parsem.parse.service.config
 
 import org.springframework.amqp.core.*
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
@@ -38,35 +38,26 @@ class RabbitConfiguration {
 
     @Bean
     fun connectionFactory(): ConnectionFactory {
-        var cachingConnectionFactory = CachingConnectionFactory(host);
-        cachingConnectionFactory.username = username;
-        cachingConnectionFactory.setPassword(password);
-        cachingConnectionFactory.virtualHost = vHost;
-        return cachingConnectionFactory;
+        val cachingConnectionFactory = CachingConnectionFactory(host)
+        cachingConnectionFactory.username = username
+        cachingConnectionFactory.setPassword(password)
+        cachingConnectionFactory.virtualHost = vHost
+        return cachingConnectionFactory
     }
 
     @Bean
-    fun amqpAdmin(): AmqpAdmin {
-        return RabbitAdmin(connectionFactory());
-    }
+    fun amqpAdmin(): AmqpAdmin = RabbitAdmin(connectionFactory())
 
     @Bean
-    fun rabbitTemplate(): RabbitTemplate {
-        return RabbitTemplate(connectionFactory());
-    }
+    fun rabbitTemplate(): RabbitTemplate = RabbitTemplate(connectionFactory());
 
     @Bean
-    fun myQueue(): Queue {
-        return Queue(qName);
-    }
+    fun myQueue(): Queue = Queue(qName)
 
     @Bean
-    fun exchange(): DirectExchange {
-        return DirectExchange(exchange, true, false);
-    }
+    fun exchange(): DirectExchange = DirectExchange(exchange, true, false)
 
     @Bean
-    fun binding(): Binding {
-        return BindingBuilder.bind(myQueue()).to(exchange()).with(routingKey);
-    }
+    fun binding(): Binding = BindingBuilder.bind(myQueue()).to(exchange()).with(routingKey);
+
 }

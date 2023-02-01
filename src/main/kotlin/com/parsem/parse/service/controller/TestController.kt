@@ -1,6 +1,6 @@
-package com.parsem.parseservice.controller
+package com.parsem.parse.service.controller
 
-import com.parsem.parseservice.serivce.BasePageInfoService
+import com.parsem.parse.service.serivce.api.onliner.BasePageInfoService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseStatus
