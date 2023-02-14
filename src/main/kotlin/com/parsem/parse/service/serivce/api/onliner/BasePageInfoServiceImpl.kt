@@ -1,14 +1,12 @@
 package com.parsem.parse.service.serivce.api.onliner
 
 import org.springframework.web.reactive.function.client.WebClient;
-import com.parsem.parse.service.config.ParseConfiguration
 import com.parsem.parse.service.serivce.OnlinerApiTransferService
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 
 @Service
 class BasePageInfoServiceImpl(
-    private var config: ParseConfiguration,
     private var webClient: WebClient,
     private var onlinerApiTransferService: OnlinerApiTransferService
 ): BasePageInfoService {
