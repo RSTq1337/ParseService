@@ -9,13 +9,13 @@ services:
     ports:
       - "8080:8080"
     environment:
-      RABBITMQ_HOST: rabbitmq
-      RABBITMQ_USER: guest
-      RABBITMQ_PASSWORD: guest
-      RABBITMQ_PORT: 5672
-      TEMP_DEFAULT_QUEUE: carQueue
-      TEMP_EXCHANGE: carExchange
-      TEMP_ROUTING_KEY: car.request
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      RABBITMQ_PORT: ${RABBITMQ_PORT}
+      TEMP_DEFAULT_QUEUE: ${TEMP_DEFAULT_QUEUE}
+      TEMP_EXCHANGE: ${TEMP_EXCHANGE}
+      TEMP_ROUTING_KEY: ${TEMP_ROUTING_KEY}
   parse-service:
     container_name: parse-service
     image: 'rstq1337/parse-service:v3'
@@ -25,25 +25,22 @@ services:
     ports:
         - "8086:8081"
     environment:
-        RABBITMQ_HOST: rabbitmq
-        RABBITMQ_USER: guest
-        RABBITMQ_PASSWORD: guest
-        RABBITMQ_PORT: 5672
-        TEMP_DEFAULT_QUEUE: carQueue
-        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cars
-        SPRING_DATASOURCE_USERNAME: postgres
-        SPRING_DATASOURCE_PASSWORD: postgres
+        RABBITMQ_HOST: ${RABBITMQ_HOST}
+        RABBITMQ_USER: ${RABBITMQ_USERNAME}
+        RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+        RABBITMQ_PORT: ${RABBITMQ_PORT}
+        TEMP_DEFAULT_QUEUE: ${TEMP_DEFAULT_QUEUE}
+        SPRING_DATASOURCE_URL: ${DB_URL}
+        SPRING_DATASOURCE_USERNAME: ${DB_USER}
+        SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
         SPRING_JPA_HIBERNATE_DDL_AUTO: update
   rabbitmq:
     container_name: rabbitmq
+    image: 'rstq1337/rabbitmq:v1'
     ports:
       - '5672:5672'
       - '15672:15672'
-    image: 'rabbitmq:3.10-management'
     restart: always
-#    volumes:
-#      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-#      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
   postgres:
     image: 'postgres:14.5-bullseye'
     restart: always
@@ -53,9 +50,9 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=cars
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
 volumes:
     postgres:
       driver: local
